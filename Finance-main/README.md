@@ -34,8 +34,7 @@ git push origin main
 
 ## 📱 Cómo Instalar en el Móvil
 
-### iPhone/iPad (Safari)
-
+### iPhone/iPad (Safari)jk
 1. Abre tu app en Safari: `https://tu-usuario.github.io/tu-repo`
 2. Toca el botón **Compartir** 🔗 (abajo en el centro)
 3. Scroll hacia abajo
