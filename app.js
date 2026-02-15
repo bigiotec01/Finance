@@ -1,4 +1,4 @@
-// Organizador de Finanzas Personal - App v3.0.2
+// Organizador de Finanzas Personal - App v3.0.4
 'use strict';
 
 let gastosChartInstance = null;

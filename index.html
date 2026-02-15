@@ -981,106 +981,129 @@
         }
         
         /* ESTILOS TABLA COMPACTA GASTOS FIJOS */
-        .tabla-gastos-fijos {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
+        /* ===== LISTA COMPACTA DE GASTOS FIJOS ===== */
+        .gastos-fijos-lista {
             background: white;
-            border-radius: 10px;
+            border-radius: 12px;
             overflow: hidden;
+            margin-bottom: 15px;
+            border: 1.5px solid #e8eaf6;
         }
-        
-        .tabla-gastos-fijos thead {
+        .gastos-fijos-header {
+            display: grid;
+            grid-template-columns: 2fr 1.1fr 0.65fr 1.2fr 1.2fr 76px;
+            gap: 8px;
+            padding: 10px 14px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-        }
-        
-        .tabla-gastos-fijos th {
-            padding: 12px 10px;
-            text-align: left;
-            font-size: 0.9em;
+            font-size: 0.82em;
             font-weight: 600;
+            letter-spacing: 0.2px;
         }
-        
-        .tabla-gastos-fijos td {
-            padding: 10px;
-            border-bottom: 1px solid #e0e0e0;
+        .gasto-fijo-row {
+            display: grid;
+            grid-template-columns: 2fr 1.1fr 0.65fr 1.2fr 1.2fr 76px;
+            gap: 8px;
+            padding: 7px 14px;
+            align-items: center;
+            border-bottom: 1px solid #f0f0f8;
+            transition: background 0.18s;
         }
-        
-        .tabla-gastos-fijos tbody tr:hover {
-            background: #f8f9ff;
-        }
-        
-        .tabla-gastos-fijos tbody tr:last-child td {
-            border-bottom: none;
-        }
-        
-        .tabla-gastos-fijos input[type="text"],
-        .tabla-gastos-fijos input[type="number"],
-        .tabla-gastos-fijos select {
+        .gasto-fijo-row:last-child { border-bottom: none; }
+        .gasto-fijo-row:hover { background: #f8f9ff; }
+        .gasto-fijo-row input[type="text"],
+        .gasto-fijo-row input[type="number"],
+        .gasto-fijo-row select {
             width: 100%;
-            padding: 8px;
-            border: 2px solid #e0e0e0;
-            border-radius: 6px;
-            font-size: 0.95em;
-            transition: all 0.3s;
+            padding: 7px 9px;
+            border: 1.5px solid #e8eaf6;
+            border-radius: 7px;
+            font-size: 0.9em;
+            transition: all 0.2s;
+            background: #fafbff;
         }
-        
-        .tabla-gastos-fijos input[type="text"]:focus,
-        .tabla-gastos-fijos input[type="number"]:focus,
-        .tabla-gastos-fijos select:focus {
+        .gasto-fijo-row input:focus,
+        .gasto-fijo-row select:focus {
             outline: none;
             border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
         }
-        
-        .tabla-gastos-fijos .btn-eliminar-fila {
-            background: #ff6b6b;
-            color: white;
-            border: none;
-            padding: 6px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1.1em;
+        .gasto-fijo-acciones { display: flex; gap: 5px; justify-content: center; }
+        .btn-eliminar-fila {
+            background: #ff6b6b; color: white; border: none;
+            padding: 6px 10px; border-radius: 5px;
+            cursor: pointer; font-size: 1.1em; transition: all 0.2s;
+        }
+        .btn-eliminar-fila:hover { background: #ff5252; transform: scale(1.1); }
+        .btn-copiar-fila {
+            background: #51cf66; color: white; border: none;
+            padding: 6px 10px; border-radius: 5px;
+            cursor: pointer; font-size: 1.1em; transition: all 0.2s;
+        }
+        .btn-copiar-fila:hover { background: #37b24d; transform: scale(1.1); }
+        @media (max-width: 600px) {
+            .gastos-fijos-header { display: none; }
+            .gasto-fijo-row {
+                grid-template-columns: 1fr 1fr;
+                padding: 10px 12px;
+                gap: 7px;
+            }
+            .gasto-fijo-row .gasto-col-nombre { grid-column: 1 / -1; }
+            .gasto-fijo-row .gasto-col-acciones { grid-column: 1 / -1; justify-content: flex-end; }
+        }
+
+        /* ===== RESUMEN RÁPIDO ===== */
+        #resumen-rapido {
+            margin-top: 8px;
+            font-size: 0.88em;
+            font-weight: 600;
+            min-height: 0;
             transition: all 0.3s;
-            margin-left: 5px;
         }
-        
-        .tabla-gastos-fijos .btn-eliminar-fila:hover {
-            background: #ff5252;
-            transform: scale(1.1);
+        .resumen-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 13px;
+            border-radius: 20px;
+            border: 1.5px solid currentColor;
+            background: rgba(255,255,255,0.55);
         }
-        
-        .tabla-gastos-fijos .btn-copiar-fila {
-            background: #51cf66;
-            color: white;
-            border: none;
-            padding: 6px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1.1em;
-            transition: all 0.3s;
+        .resumen-positivo { color: #2e7d32; }
+        .resumen-negativo { color: #c62828; }
+
+        /* ===== TOAST DE ACTUALIZACIÓN ===== */
+        .toast-update {
+            position: fixed;
+            bottom: -80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1a1b2e;
+            color: #e2e8f0;
+            padding: 12px 18px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+            z-index: 9999;
+            transition: bottom 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            font-size: 0.9em;
+            white-space: nowrap;
         }
-        
-        .tabla-gastos-fijos .btn-copiar-fila:hover {
-            background: #37b24d;
-            transform: scale(1.1);
+        .toast-update.show { bottom: 24px; }
+        #btn-actualizar-sw {
+            background: #667eea; color: white; border: none;
+            padding: 6px 14px; border-radius: 7px;
+            cursor: pointer; font-weight: 600; font-size: 0.9em;
+            transition: background 0.2s;
         }
-        
-        .tabla-gastos-fijos th {
-            cursor: pointer;
-            user-select: none;
-            position: relative;
-        }
-        
-        .tabla-gastos-fijos th:hover {
-            background: rgba(102, 126, 234, 0.9);
-        }
-        
-        .tabla-gastos-fijos th:after {
-            content: ' ⇅';
-            font-size: 0.8em;
-            opacity: 0.5;
+        #btn-actualizar-sw:hover { background: #764ba2; }
+        .toast-update > button:last-child {
+            background: none; border: none;
+            color: rgba(255,255,255,0.5); cursor: pointer;
+            font-size: 1.1em; padding: 0 4px;
         }
         
         .btn-agregar-fila {
@@ -1186,10 +1209,9 @@
                 gap: 15px !important;
             }
             
-            .tabla-gastos-fijos th,
-            .tabla-gastos-fijos td {
-                padding: 8px 6px;
-                font-size: 0.9em;
+            .gastos-fijos-header {
+                font-size: 0.78em;
+                padding: 8px 12px;
             }
         }
         
@@ -1269,61 +1291,7 @@
                 min-height: 48px;
             }
             
-            /* Tabla responsive */
-            .tabla-gastos-fijos {
-                display: block;
-                width: 100%;
-            }
             
-            .tabla-gastos-fijos thead {
-                display: none; /* Ocultar headers en móvil */
-            }
-            
-            .tabla-gastos-fijos tbody {
-                display: block;
-            }
-            
-            .tabla-gastos-fijos tr {
-                display: block;
-                margin-bottom: 15px;
-                background: white;
-                border: 2px solid #e0e0e0;
-                border-radius: 10px;
-                padding: 12px;
-            }
-            
-            .tabla-gastos-fijos td {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 8px 0;
-                border: none;
-            }
-            
-            .tabla-gastos-fijos td:before {
-                content: attr(data-label);
-                font-weight: bold;
-                color: #667eea;
-                margin-right: 10px;
-                flex-shrink: 0;
-            }
-            
-            .tabla-gastos-fijos td input,
-            .tabla-gastos-fijos td select {
-                flex: 1;
-                margin-left: 10px;
-            }
-            
-            .tabla-gastos-fijos td:last-child {
-                justify-content: center;
-                border-top: 1px solid #e0e0e0;
-                padding-top: 12px;
-                margin-top: 8px;
-            }
-            
-            .tabla-gastos-fijos td:last-child:before {
-                display: none;
-            }
             
             /* Botón eliminar más grande en móvil */
             .btn-eliminar-fila {
@@ -1393,13 +1361,18 @@
             .resumen-box {
                 padding: 15px;
             }
-            
+
             .resumen-item {
                 padding: 10px;
                 font-size: 0.9em;
             }
+
+            .action-buttons { flex-direction: column; }
+            .action-buttons .btn-secondary { text-align: center; }
+            .resultado { padding: 15px; }
+            .pago-title { font-size: 0.9em; padding: 12px; }
         }
-        
+
         /* MÓVIL PEQUEÑO (pantallas menores a 400px) */
         @media (max-width: 400px) {
             .container {
@@ -1424,12 +1397,20 @@
             select {
                 padding: 12px 10px;
             }
-            
-            .tabla-gastos-fijos tr {
-                padding: 10px;
-            }
         }
-        
+
+        /* MÓVIL MUY PEQUEÑO (pantallas menores a 380px) */
+        @media (max-width: 380px) {
+            .container { padding: 12px; margin: 5px; }
+            .section { padding: 14px; }
+            .gasto-fijo-row { grid-template-columns: 1fr; }
+            .gasto-fijo-row .gasto-col-nombre,
+            .gasto-fijo-row .gasto-col-acciones { grid-column: unset; }
+            .header-row h1 { font-size: 1.4em; }
+            .theme-toggle { width: 36px; height: 36px; font-size: 1.1em; }
+            .btn-calculate { font-size: 1em; padding: 16px; }
+        }
+
         /* ==================== AYUDA CONTEXTUAL Y TOOLTIPS ==================== */
         
         .help-icon {
@@ -1785,6 +1766,8 @@
                 padding: 12px 8px;
                 font-size: 0.8em;
             }
+            .header-row { margin-bottom: 6px; }
+            .theme-toggle { width: 38px; height: 38px; }
         }
 
         /* ===== TOGGLE DE TEMA ===== */
@@ -1882,6 +1865,154 @@
             background: rgba(255,255,255,0.08);
             border-color: rgba(255,255,255,0.2);
         }
+        [data-theme="dark"] .gastos-fijos-lista { background: #252640; border-color: #3d3d58; }
+        [data-theme="dark"] .gasto-fijo-row { border-color: #2d2d44; }
+        [data-theme="dark"] .gasto-fijo-row:hover { background: #2d2d44; }
+        [data-theme="dark"] .gasto-fijo-row input,
+        [data-theme="dark"] .gasto-fijo-row select { background: #2d2d44; border-color: #3d3d58; color: #e2e8f0; }
+        [data-theme="dark"] .resumen-badge { background: rgba(255,255,255,0.08); }
+
+        /* Catch-all: inline styles con colores oscuros → texto legible en dark */
+        [data-theme="dark"] [style*="color: #666"] { color: #94a3b8 !important; }
+        [data-theme="dark"] [style*="color:#666"]  { color: #94a3b8 !important; }
+        [data-theme="dark"] [style*="color: #333"] { color: #e2e8f0 !important; }
+        [data-theme="dark"] [style*="color:#333"]  { color: #e2e8f0 !important; }
+        [data-theme="dark"] [style*="color: #4a5568"] { color: #94a3b8 !important; }
+        [data-theme="dark"] [style*="color: #2e7d32"] { color: #86efac !important; }
+        [data-theme="dark"] .health-info p        { color: #94a3b8; }
+        [data-theme="dark"] .help-text            { background: #1e2030; color: #94a3b8; }
+        [data-theme="dark"] .example-box          { background: #2a2510; border-color: #ffd43b; }
+        [data-theme="dark"] .example-box ul       { color: #94a3b8; }
+        [data-theme="dark"] .example-box h4       { color: #fbbf24; }
+        [data-theme="dark"] .presupuesto-label    { color: #86efac; }
+        [data-theme="dark"] #autosave-indicator   { color: #86efac; }
+        [data-theme="dark"] .resumen-positivo     { color: #86efac; }
+        [data-theme="dark"] .resumen-negativo     { color: #fca5a5; }
+        [data-theme="dark"] .pago-item            { background: #1e2030; }
+        [data-theme="dark"] .resumen-item         { border-color: #3d3d58; }
+        [data-theme="dark"] .consejos             { background: #2a2510; border-color: #ffd43b; }
+        [data-theme="dark"] .modal-header h2      { color: #e2e8f0; }
+
+        /* ===== RESULTADO REDISEÑADO — v3.0.4 ===== */
+        .resultado-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px 30px;
+            border-radius: 15px 15px 0 0;
+            margin: -30px -30px 25px -30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .resultado-header h2 {
+            background: none !important;
+            -webkit-text-fill-color: white !important;
+            color: white;
+            font-size: 1.5em;
+            margin: 0;
+        }
+        .health-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.15);
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+        .resultado-metrics {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .metric-card {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            border-top: 3px solid #667eea;
+            transition: transform 0.2s;
+        }
+        .metric-card:hover { transform: translateY(-2px); }
+        .metric-icon { font-size: 1.6em; margin-bottom: 4px; }
+        .metric-label { font-size: 0.72em; color: #888; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        .metric-value { font-size: 1.3em; font-weight: 700; margin-top: 4px; }
+        .metric-value.positivo { color: #37b24d; }
+        .metric-value.negativo { color: #ff6b6b; }
+        .metric-value.neutro   { color: #667eea; }
+        .paycheck-card {
+            background: white;
+            border-radius: 14px;
+            overflow: hidden;
+            margin-bottom: 18px;
+            box-shadow: 0 4px 18px rgba(102,126,234,0.1);
+            border: 1.5px solid #e8eaf6;
+        }
+        .paycheck-card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 14px 18px;
+            font-weight: 700;
+            font-size: 0.95em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .paycheck-card-body { padding: 12px 15px; }
+        .gasto-linea {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 9px 12px;
+            border-radius: 8px;
+            margin-bottom: 6px;
+            font-size: 0.9em;
+        }
+        .gasto-linea-icon { font-size: 1.1em; flex-shrink: 0; margin-top: 1px; }
+        .gasto-linea-info { flex: 1; }
+        .gasto-linea-monto { font-weight: 700; white-space: nowrap; }
+        .gasto-linea.tipo-tarjeta  { background: #f0f2ff; border-left: 3px solid #667eea; }
+        .gasto-linea.tipo-variable { background: #f0fff4; border-left: 3px solid #51cf66; }
+        .gasto-linea.tipo-imprevisto { background: #fff5f5; border-left: 3px solid #ff6b6b; }
+        .gasto-linea.tipo-misc     { background: #fffbf0; border-left: 3px solid #ffd43b; }
+        .gasto-linea.tipo-fijo     { background: #f8f9ff; border-left: 3px solid #94a3b8; }
+        .paycheck-total {
+            margin-top: 10px;
+            padding: 12px 15px;
+            background: linear-gradient(135deg, #f0f2ff, #f8f9ff);
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+            font-size: 0.95em;
+            border-top: 2px solid #e8eaf6;
+        }
+        [data-theme="dark"] .metric-card { background: #252640; border-top-color: #667eea; box-shadow: none; }
+        [data-theme="dark"] .metric-label { color: #64748b; }
+        [data-theme="dark"] .paycheck-card { background: #1e1f35; border-color: #3d3d58; box-shadow: none; }
+        [data-theme="dark"] .gasto-linea.tipo-fijo     { background: #252640; }
+        [data-theme="dark"] .gasto-linea.tipo-tarjeta  { background: #1a2035; }
+        [data-theme="dark"] .gasto-linea.tipo-variable { background: #0d2b18; }
+        [data-theme="dark"] .gasto-linea.tipo-imprevisto { background: #2b0d0d; }
+        [data-theme="dark"] .gasto-linea.tipo-misc     { background: #2a2510; }
+        [data-theme="dark"] .paycheck-total { background: #252640; border-color: #3d3d58; color: #e2e8f0; }
+        [data-theme="dark"] .resultado-header { background: linear-gradient(135deg, #4a5890 0%, #5a3d82 100%); }
+        @media (max-width: 600px) {
+            .resultado-metrics { grid-template-columns: 1fr 1fr; }
+            .resultado-header { margin: -15px -15px 18px -15px; padding: 18px; }
+            .resultado-header h2 { font-size: 1.2em; }
+            .metric-card { padding: 12px 8px; }
+            .metric-value { font-size: 1.1em; }
+            .paycheck-card-header { font-size: 0.85em; padding: 11px 14px; }
+            .paycheck-card-body { padding: 10px 12px; }
+            .gasto-linea { padding: 8px 10px; font-size: 0.85em; }
+            .paycheck-total { font-size: 0.88em; padding: 10px 12px; }
+        }
 
     </style>
     <script>
@@ -1897,10 +2028,10 @@
     <div class="version-banner" id="version-banner">
         <button class="version-close" onclick="document.getElementById('version-banner').style.display='none'" title="Cerrar">×</button>
         <h3>
-            <span class="version-badge">v3.0.2</span>
-            🌙 ¡Modo Oscuro!
+            <span class="version-badge">v3.0.4</span>
+            🎨 Rediseño Resultado
         </h3>
-        <p>🌙 Modo oscuro/claro + 🔄 Actualizaciones automáticas en iPhone + 🛠️ Fixes CSS</p>
+        <p>📱 Mejor mobile + 🌙 Dark mode corregido + 📊 Cards de resultado modernas</p>
     </div>
     
     <!-- PANEL DE NOTIFICACIONES/RECORDATORIOS -->
@@ -1935,6 +2066,7 @@
                 </div>
             </div>
             <div id="autosave-indicator">💾 Guardado automáticamente</div>
+            <div id="resumen-rapido"></div>
         </div>
         
 <!-- AYUDA GENERAL COLAPSABLE -->
@@ -2268,22 +2400,16 @@
                 Puedes agregar tantos gastos como necesites. Click en "➕ Agregar Gasto Fijo" para cada uno.
             </div>
             
-            <div style="overflow-x: auto; margin-bottom: 15px;">
-                <table class="tabla-gastos-fijos">
-                    <thead>
-                        <tr>
-                            <th style="width: 20%;" onclick="ordenarTablaGastosFijos('nombre')" title="Click para ordenar">Nombre</th>
-                            <th style="width: 15%;" onclick="ordenarTablaGastosFijos('monto')" title="Click para ordenar">Monto ($)</th>
-                            <th style="width: 10%;" onclick="ordenarTablaGastosFijos('dia')" title="Click para ordenar">Día</th>
-                            <th style="width: 20%;">Mes</th>
-                            <th style="width: 20%;">Recurrencia</th>
-                            <th style="width: 15%; text-align: center;"></th>
-                        </tr>
-                    </thead>
-                    <tbody id="tabla-gastos-fijos-body">
-                        <!-- Las filas se agregarán dinámicamente aquí -->
-                    </tbody>
-                </table>
+            <div class="gastos-fijos-lista">
+                <div class="gastos-fijos-header">
+                    <span onclick="ordenarTablaGastosFijos('nombre')" style="cursor:pointer" title="Ordenar">Nombre ⇅</span>
+                    <span onclick="ordenarTablaGastosFijos('monto')" style="cursor:pointer" title="Ordenar">Monto ($) ⇅</span>
+                    <span onclick="ordenarTablaGastosFijos('dia')" style="cursor:pointer" title="Ordenar">Día ⇅</span>
+                    <span>Mes</span>
+                    <span>Recurrencia</span>
+                    <span></span>
+                </div>
+                <div id="tabla-gastos-fijos-body"></div>
             </div>
             
             <button class="btn-agregar-fila" onclick="agregarFilaGastoFijo(); return false;">➕ Agregar Gasto Fijo</button>
@@ -2451,7 +2577,7 @@
                 </a>
             </div>
             <div style="margin-top: 10px; font-size: 0.8em; opacity: 0.7;">
-                Versión 3.0.2 - Febrero 2026
+                Versión 3.0.4 - Febrero 2026
             </div>
         </div>
     </div>
@@ -2548,7 +2674,7 @@
             const notificaciones = [];
             
             // Obtener gastos fijos
-            const filasGastosFijos = document.querySelectorAll('#tabla-gastos-fijos-body tr');
+            const filasGastosFijos = document.querySelectorAll('#tabla-gastos-fijos-body .gasto-fijo-row');
             filasGastosFijos.forEach(fila => {
                 const nombre = fila.querySelector('.gasto-fijo-nombre')?.value || '';
                 const dia = parseInt(fila.querySelector('.gasto-fijo-dia')?.value) || 0;
@@ -2834,7 +2960,7 @@
                 imprevistos: []
             };
             
-            const filasGastosFijos = document.querySelectorAll('#tabla-gastos-fijos-body tr');
+            const filasGastosFijos = document.querySelectorAll('#tabla-gastos-fijos-body .gasto-fijo-row');
             filasGastosFijos.forEach(fila => {
                 const nombre = fila.querySelector('.gasto-fijo-nombre')?.value || '';
                 const monto = fila.querySelector('.gasto-fijo-monto')?.value || '';
@@ -3106,27 +3232,22 @@
 
         // Función para agregar fila a la tabla de gastos fijos
         function agregarFilaGastoFijo() {
-            console.log('🔵 Agregando fila de gasto fijo...');
-            const tbody = document.getElementById('tabla-gastos-fijos-body');
-            
-            if (!tbody) {
-                console.error('❌ No se encontró el tbody');
-                alert('Error: No se encontró la tabla de gastos fijos');
-                return;
-            }
-            
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td data-label="Nombre">
-                    <input type="text" class="gasto-fijo-nombre" placeholder="Agua" />
-                </td>
-                <td data-label="Monto ($)">
+            const lista = document.getElementById('tabla-gastos-fijos-body');
+            if (!lista) return;
+
+            const row = document.createElement('div');
+            row.className = 'gasto-fijo-row';
+            row.innerHTML = `
+                <div class="gasto-fijo-col gasto-col-nombre">
+                    <input type="text" class="gasto-fijo-nombre" placeholder="Ej: Agua" />
+                </div>
+                <div class="gasto-fijo-col gasto-col-monto">
                     <input type="number" class="gasto-fijo-monto" min="0" step="0.01" placeholder="45.00" />
-                </td>
-                <td data-label="Día">
+                </div>
+                <div class="gasto-fijo-col gasto-col-dia">
                     <input type="number" class="gasto-fijo-dia" min="1" max="31" placeholder="15" />
-                </td>
-                <td data-label="Mes">
+                </div>
+                <div class="gasto-fijo-col gasto-col-mes">
                     <select class="gasto-fijo-mes">
                         <option value="todos" selected>Todos</option>
                         <option value="1">Enero</option>
@@ -3142,30 +3263,25 @@
                         <option value="11">Noviembre</option>
                         <option value="12">Diciembre</option>
                     </select>
-                </td>
-                <td data-label="Recurrencia">
+                </div>
+                <div class="gasto-fijo-col gasto-col-recurrencia">
                     <select class="gasto-fijo-recurrencia">
                         <option value="mensual" selected>Mensual</option>
                         <option value="unico">Pago Único</option>
                     </select>
-                </td>
-                <td>
+                </div>
+                <div class="gasto-fijo-col gasto-col-acciones gasto-fijo-acciones">
                     <button class="btn-copiar-fila" onclick="copiarFilaGastoFijo(this)" title="Copiar fila">📋</button>
                     <button class="btn-eliminar-fila" onclick="eliminarFilaGastoFijo(this)" title="Eliminar">🗑️</button>
-                </td>
+                </div>
             `;
-            tbody.appendChild(tr);
-            
-            // AUTO-FOCUS: Enfocar el primer input
-            const primerInput = tr.querySelector('.gasto-fijo-nombre');
-            if (primerInput) {
-                setTimeout(() => primerInput.focus(), 100);
-            }
-            
-            // NAVEGACIÓN CON TECLADO
-            const inputs = tr.querySelectorAll('input, select');
+            lista.appendChild(row);
+
+            const primerInput = row.querySelector('.gasto-fijo-nombre');
+            if (primerInput) setTimeout(() => primerInput.focus(), 100);
+
+            const inputs = row.querySelectorAll('input, select');
             inputs.forEach((input, index) => {
-                // Enter en el último campo → Agregar nueva fila
                 input.addEventListener('keydown', (e) => {
                     if (e.key === 'Enter' && index === inputs.length - 1) {
                         e.preventDefault();
@@ -3173,27 +3289,22 @@
                     }
                 });
             });
-            
+
             gastoFijoCounter++;
-            console.log('✅ Fila agregada correctamente');
         }
         
-        // Función para copiar/duplicar fila
         function copiarFilaGastoFijo(btn) {
-            const tr = btn.closest('tr');
-            const nombre = tr.querySelector('.gasto-fijo-nombre').value;
-            const monto = tr.querySelector('.gasto-fijo-monto').value;
-            const dia = tr.querySelector('.gasto-fijo-dia').value;
-            const mes = tr.querySelector('.gasto-fijo-mes').value;
-            const recurrencia = tr.querySelector('.gasto-fijo-recurrencia').value;
-            
-            // Crear nueva fila
+            const row = btn.closest('.gasto-fijo-row');
+            const nombre = row.querySelector('.gasto-fijo-nombre').value;
+            const monto = row.querySelector('.gasto-fijo-monto').value;
+            const dia = row.querySelector('.gasto-fijo-dia').value;
+            const mes = row.querySelector('.gasto-fijo-mes').value;
+            const recurrencia = row.querySelector('.gasto-fijo-recurrencia').value;
+
             agregarFilaGastoFijo();
-            
-            // Llenar con los valores copiados
-            const tbody = document.getElementById('tabla-gastos-fijos-body');
-            const ultimaFila = tbody.lastElementChild;
-            
+
+            const lista = document.getElementById('tabla-gastos-fijos-body');
+            const ultimaFila = lista.lastElementChild;
             if (ultimaFila) {
                 ultimaFila.querySelector('.gasto-fijo-nombre').value = nombre;
                 ultimaFila.querySelector('.gasto-fijo-monto').value = monto;
@@ -3202,22 +3313,15 @@
                 ultimaFila.querySelector('.gasto-fijo-recurrencia').value = recurrencia;
             }
         }
-        
-        // Función para eliminar fila con confirmación
+
         function eliminarFilaGastoFijo(btn) {
-            const tr = btn.closest('tr');
-            const nombre = tr.querySelector('.gasto-fijo-nombre').value || 'este gasto';
-            
-            // CONFIRMACIÓN antes de eliminar
-            if (confirm(`¿Seguro que quieres eliminar "${nombre}"?`)) {
-                tr.remove();
-            }
+            const row = btn.closest('.gasto-fijo-row');
+            row.remove();
         }
         
-        // Función para ordenar tabla
         function ordenarTablaGastosFijos(columna) {
-            const tbody = document.getElementById('tabla-gastos-fijos-body');
-            const filas = Array.from(tbody.querySelectorAll('tr'));
+            const lista = document.getElementById('tabla-gastos-fijos-body');
+            const filas = Array.from(lista.querySelectorAll('.gasto-fijo-row'));
             
             filas.sort((a, b) => {
                 let valorA, valorB;
@@ -3239,9 +3343,8 @@
                 return 0;
             });
             
-            // Limpiar tbody y re-agregar filas ordenadas
-            tbody.innerHTML = '';
-            filas.forEach(fila => tbody.appendChild(fila));
+            lista.innerHTML = '';
+            filas.forEach(fila => lista.appendChild(fila));
         }
         
         // Función para expandir/colapsar ayuda
@@ -3663,7 +3766,7 @@
             }
             
             // Validar Gastos Fijos (tabla)
-            const filasGastosFijos = document.querySelectorAll('#tabla-gastos-fijos-body tr');
+            const filasGastosFijos = document.querySelectorAll('#tabla-gastos-fijos-body .gasto-fijo-row');
             let gastosValidos = 0;
             
             filasGastosFijos.forEach((fila, index) => {
@@ -3823,7 +3926,7 @@
             const totalIngresos = esSemanal ? (montoPago1 + montoPago2 + montoPago3 + montoPago4) : (montoPago1 + montoPago2);
             
             // Obtener gastos fijos de la TABLA COMPACTA
-            const filasGastosFijos = document.querySelectorAll('#tabla-gastos-fijos-body tr');
+            const filasGastosFijos = document.querySelectorAll('#tabla-gastos-fijos-body .gasto-fijo-row');
             const gastos = [];
             let totalGastos = 0;
             
@@ -4306,20 +4409,15 @@ tarjetas.forEach(tarjeta => {
             const sobranteSinMeta = capitalTotal - totalGastosCompleto;
             const porcentajeAhorro = totalIngresos > 0 ? ((sobrante / totalIngresos) * 100).toFixed(1) : 0;
             
+            // Variables de salud financiera
+            const healthEmoji = sobrante >= capitalTotal * 0.2 ? '🟢 Excelente' : sobrante >= 0 ? '🟡 Aceptable' : '🔴 Atención';
+            const healthLabel = sobrante >= capitalTotal * 0.2 ? '¡Salud financiera excelente!' : sobrante >= 0 ? 'Finanzas equilibradas' : 'Gastos exceden ingresos';
+
             // Generar resultado
             let resultadoHTML = `
-                <h2>📊 Tu Plan Financiero</h2>
-                
-                <!-- SEMÁFORO DE SALUD FINANCIERA -->
-                <div class="health-meter">
-                    <div class="health-circle ${sobrante >= capitalTotal * 0.2 ? 'health-green' : sobrante >= 0 ? 'health-yellow' : 'health-red'}">
-                        ${sobrante >= capitalTotal * 0.2 ? '🟢' : sobrante >= 0 ? '🟡' : '🔴'}
-                    </div>
-                    <div class="health-info">
-                        <h3>${sobrante >= capitalTotal * 0.2 ? '¡Excelente Salud Financiera!' : sobrante >= 0 ? 'Salud Financiera Aceptable' : '⚠️ Atención Requerida'}</h3>
-                        <p>${sobrante >= capitalTotal * 0.2 ? 'Estás ahorrando más del 20% de tu capital. ¡Sigue así!' : sobrante >= 0 ? 'Estás equilibrado pero podrías ahorrar más.' : 'Tus gastos exceden tus ingresos. Revisa tus prioridades.'}</p>
-                        <p style="margin-top: 5px;"><strong>${sobrante >= 0 ? 'Te sobran' : 'Te faltan'}: $${Math.abs(sobrante).toFixed(2)}</strong> (${Math.abs((sobrante / capitalTotal) * 100).toFixed(1)}% de tu capital)</p>
-                    </div>
+                <div class="resultado-header">
+                    <h2>📊 Tu Plan Financiero</h2>
+                    <div class="health-badge">${healthEmoji}</div>
                 </div>
                 
                 ${metaAhorro > 0 ? `
@@ -4350,108 +4448,76 @@ tarjetas.forEach(tarjeta => {
                     <h3 style="color: #667eea; margin-bottom: 15px;">💡 Alertas Inteligentes</h3>
                 </div>
                 
-                <div class="resumen-box">
-                    <h3 style="color: #667eea; margin-bottom: 15px;">💰 Resumen General</h3>
-                    ${balanceActual > 0 ? `
-                    <div class="resumen-item" style="background: #e8f5e9;">
-                        <span>💵 Balance Actual (Capital):</span>
-                        <span style="color: #37b24d; font-weight: bold;">$${balanceActual.toFixed(2)}</span>
+                <div class="resultado-metrics">
+                    <div class="metric-card">
+                        <div class="metric-icon">💰</div>
+                        <div class="metric-label">Capital Total</div>
+                        <div class="metric-value neutro">$${capitalTotal.toFixed(2)}</div>
                     </div>
-                    ` : ''}
-                    <div class="resumen-item">
-                        <span>Total Ingresos Mensuales:</span>
-                        <span style="color: #51cf66; font-weight: bold;">$${totalIngresos.toFixed(2)}</span>
+                    <div class="metric-card">
+                        <div class="metric-icon">📉</div>
+                        <div class="metric-label">Total Gastos</div>
+                        <div class="metric-value negativo">$${totalGastosCompleto.toFixed(2)}</div>
                     </div>
-                    ${balanceActual > 0 ? `
-                    <div class="resumen-item">
-                        <span>💎 Capital Total (Balance + Ingresos):</span>
-                        <span style="color: #51cf66; font-weight: bold;">$${capitalTotal.toFixed(2)}</span>
+                    <div class="metric-card">
+                        <div class="metric-icon">${sobrante >= 0 ? '✅' : '⚠️'}</div>
+                        <div class="metric-label">Sobrante</div>
+                        <div class="metric-value ${sobrante >= 0 ? 'positivo' : 'negativo'}">${sobrante >= 0 ? '+' : ''}$${sobrante.toFixed(2)}</div>
                     </div>
-                    ` : ''}
-                    <div class="resumen-item">
-                        <span>Total Gastos Fijos:</span>
-                        <span style="color: #ff6b6b; font-weight: bold;">$${totalGastos.toFixed(2)}</span>
+                    <div class="metric-card">
+                        <div class="metric-icon">📊</div>
+                        <div class="metric-label">% Ahorro</div>
+                        <div class="metric-value ${porcentajeAhorro > 0 ? 'positivo' : 'negativo'}">${porcentajeAhorro}%</div>
                     </div>
-                    <div class="resumen-item">
-                        <span>Total Misceláneos:</span>
-                        <span style="color: #f59f00; font-weight: bold;">$${totalMiscelaneos.toFixed(2)}</span>
-                    </div>
-                    ${totalImprevistos > 0 ? `
-                    <div class="resumen-item">
-                        <span>🚨 Gastos Imprevistos (Este Mes):</span>
-                        <span style="color: #ff6b6b; font-weight: bold;">$${totalImprevistos.toFixed(2)}</span>
-                    </div>
-                    ` : ''}
-                    ${metaAhorro > 0 ? `
-                    <div class="resumen-item" style="background: #fff3e0;">
-                        <span>🎯 Meta de Ahorro:</span>
-                        <span style="color: #f57c00; font-weight: bold;">$${metaAhorro.toFixed(2)}</span>
-                    </div>
-                    ` : ''}
-                    <div class="resumen-item">
-                        <span>Total Gastos:</span>
-                        <span style="color: #ff6b6b; font-weight: bold;">$${totalGastosCompleto.toFixed(2)}</span>
-                    </div>
-                    <div class="resumen-item">
-                        <span>${sobrante >= 0 ? '💵 Te Sobra:' : '⚠️ Te Falta:'}</span>
-                        <span style="color: ${sobrante >= 0 ? '#51cf66' : '#ff6b6b'};">$${Math.abs(sobrante).toFixed(2)}</span>
-                    </div>
-                    ${metaAhorro > 0 && sobrante >= 0 ? `
-                    <div class="resumen-item" style="background: #e8f5e9;">
-                        <span>✅ ¡Cumplirás tu meta de ahorro!</span>
-                        <span style="color: #37b24d; font-weight: bold;">🎉</span>
-                    </div>
-                    ` : metaAhorro > 0 ? `
-                    <div class="resumen-item" style="background: #ffebee;">
-                        <span>⚠️ Ajusta gastos para alcanzar tu meta</span>
-                        <span style="color: #ff6b6b; font-weight: bold;">Falta: $${Math.abs(sobrante).toFixed(2)}</span>
-                    </div>
-                    ` : ''}
                 </div>
                 
-                <div class="calendario-pago">
-                    <div class="pago-title">
-                        💳 PAYCHECK 1 (${diaPago1} de ${mesesNombres[mesPago1]}) - $${montoPago1.toFixed(2)}
+                <div class="paycheck-card">
+                    <div class="paycheck-card-header">
+                        <span>💳 PAYCHECK 1 — ${diaPago1} de ${mesesNombres[mesPago1]}</span>
+                        <span>$${montoPago1.toFixed(2)}</span>
                     </div>
-                    <div class="pago-detalle">
+                    <div class="paycheck-card-body">
             `;
             
             if (gastosPago1.length > 0) {
                 gastosPago1.sort((a, b) => a.dia - b.dia).forEach(gasto => {
                     const mesTexto = gasto.mes && gasto.mes !== 'todos' ? ` de ${mesesNombres[parseInt(gasto.mes)]}` : '';
                     
-                    let itemClass = 'pago-item';
+                    let tipoClass = 'tipo-fijo';
                     let icon = '✅';
                     let detalle = '';
-                    
+
                     if (gasto.tipo === 'tarjeta') {
-                        itemClass += '" style="border-left-color: #667eea; background: #f0f2ff;';
+                        tipoClass = 'tipo-tarjeta';
                         icon = '💳';
-                        
+
                         if (gasto.faltante && gasto.faltante > 0) {
-                            detalle = ` <span style="color: #ff6b6b;">⚠️ (Falta: $${gasto.faltante.toFixed(2)} para el mínimo de $${(gasto.minimo || 0).toFixed(2)})</span>`;
+                            detalle = `<span style="color: #ff6b6b; font-size:0.85em;">⚠️ Falta $${gasto.faltante.toFixed(2)} para el mínimo de $${(gasto.minimo || 0).toFixed(2)}</span>`;
                         } else if (gasto.opcionMinimo && gasto.opcionRecomendado) {
-                            let detalleDeuda = gasto.deuda > 0 ? ` - Balance: $${gasto.deuda.toFixed(2)}` : '';
+                            let detalleDeuda = gasto.deuda > 0 ? ` — Balance: $${gasto.deuda.toFixed(2)}` : '';
                             let extra = gasto.extraRecomendado || 0;
-                            detalle = `<br><span style="color: #667eea; font-weight: bold;">💡 Opciones:</span> <span style="color: #ff9800;">Mínimo $${gasto.opcionMinimo.toFixed(2)}</span> o <span style="color: #51cf66;">✨ $${gasto.opcionRecomendado.toFixed(2)} (+ $${extra.toFixed(2)})</span>${detalleDeuda}`;
+                            detalle = `<span style="font-size:0.85em;"><span style="color:#ff9800;">Mín. $${gasto.opcionMinimo.toFixed(2)}</span> · <span style="color:#51cf66;">Rec. $${gasto.opcionRecomendado.toFixed(2)} (+$${extra.toFixed(2)})</span>${detalleDeuda}</span>`;
                         } else {
-                            // Fallback if no options calculated
-                            let detalleDeuda = gasto.deuda > 0 ? ` - Balance: $${gasto.deuda.toFixed(2)}` : '';
-                            detalle = `<br><span style="color: #ff9800;">Pago mínimo: $${(gasto.minimo || 0).toFixed(2)}</span>${detalleDeuda}`;
+                            let detalleDeuda = gasto.deuda > 0 ? ` — Balance: $${gasto.deuda.toFixed(2)}` : '';
+                            detalle = `<span style="color:#ff9800; font-size:0.85em;">Mínimo: $${(gasto.minimo || 0).toFixed(2)}${detalleDeuda}</span>`;
                         }
                     } else if (gasto.tipo === 'variable') {
-                        itemClass += '" style="border-left-color: #51cf66;';
+                        tipoClass = 'tipo-variable';
                         icon = '📦';
                     } else if (gasto.tipo === 'imprevisto') {
-                        itemClass += '" style="border-left-color: #ff6b6b; background: #fff5f5;';
+                        tipoClass = 'tipo-imprevisto';
                         icon = '🚨';
-                        detalle = ` <span style="color: #ff6b6b; font-weight: bold;">(GASTO ÚNICO - Solo este mes)</span>`;
+                        detalle = `<span style="color:#ff6b6b; font-size:0.85em;">(GASTO ÚNICO - Solo este mes)</span>`;
                     }
-                    
+
                     resultadoHTML += `
-                        <div class="${itemClass}">
-                            ${icon} <strong>${gasto.nombre}</strong>: $${gasto.monto.toFixed(2)} (vence día ${gasto.dia}${mesTexto})<br>
-                            ${detalle}
+                        <div class="gasto-linea ${tipoClass}">
+                            <div class="gasto-linea-icon">${icon}</div>
+                            <div class="gasto-linea-info">
+                                <strong>${gasto.nombre}</strong> — día ${gasto.dia}${mesTexto}
+                                ${detalle ? `<br>${detalle}` : ''}
+                            </div>
+                            <div class="gasto-linea-monto">$${gasto.monto.toFixed(2)}</div>
                         </div>
                     `;
                 });
@@ -4459,87 +4525,88 @@ tarjetas.forEach(tarjeta => {
             
             if (totalMiscelaneos > 0) {
                 resultadoHTML += `
-                    <div class="pago-item" style="border-left-color: #ffd43b; background: #fffbf0;">
-                        🎯 <strong>Presupuesto Misceláneos (1ra quincena)</strong>: $${miscelaneosPorPago.toFixed(2)}
+                    <div class="gasto-linea tipo-misc">
+                        <div class="gasto-linea-icon">🎯</div>
+                        <div class="gasto-linea-info"><strong>Misceláneos (1ra quincena)</strong></div>
+                        <div class="gasto-linea-monto">$${miscelaneosPorPago.toFixed(2)}</div>
                     </div>
                 `;
             }
-            
+
             if (gastosPago1.length > 0 || totalMiscelaneos > 0) {
-                // Calcular ahorro por paycheck si hay meta
                 const ahorroPorPaycheck = metaAhorro / (esSemanal ? 4 : 2);
                 const sobranteDespuesAhorro1 = (montoPago1 - totalPago1) - ahorroPorPaycheck;
-                
+                const sobrante1 = montoPago1 - totalPago1;
+
                 resultadoHTML += `
-                    <div style="margin-top: 15px; padding: 15px; background: #e8eaff; border-radius: 8px; font-weight: bold;">
-                        Total a pagar: $${totalPago1.toFixed(2)} | 
-                        <span style="color: ${(montoPago1 - totalPago1) >= 0 ? '#51cf66' : '#ff6b6b'};">
-                            Te ${(montoPago1 - totalPago1) >= 0 ? 'sobran' : 'faltan'}: $${Math.abs(montoPago1 - totalPago1).toFixed(2)}
+                    <div class="paycheck-total">
+                        <span>Total a pagar</span>
+                        <span style="color: ${sobrante1 >= 0 ? '#37b24d' : '#ff6b6b'};">
+                            $${totalPago1.toFixed(2)}
+                            <span style="font-size:0.85em; font-weight:400; margin-left:6px;">(te ${sobrante1 >= 0 ? 'sobran' : 'faltan'} $${Math.abs(sobrante1).toFixed(2)})</span>
                         </span>
-                        ${metaAhorro > 0 ? `
-                        <br><br>
-                        <div style="background: #51cf66; color: white; padding: 12px; border-radius: 8px; margin-top: 10px;">
-                            💰 <strong>AHORRO:</strong> Aparta $${ahorroPorPaycheck.toFixed(2)} apenas cobres
-                            <br>
-                            <span style="font-size: 0.9em;">Después del ahorro te quedan: 
-                            <strong style="color: ${sobranteDespuesAhorro1 >= 0 ? '#d1f7dd' : '#ff6b6b'};">
-                                $${sobranteDespuesAhorro1.toFixed(2)}
-                            </strong> disponibles</span>
-                        </div>
-                        ` : ''}
                     </div>
+                    ${metaAhorro > 0 ? `
+                    <div style="background: #51cf66; color: white; padding: 10px 14px; border-radius: 8px; margin-top: 8px; font-size:0.9em;">
+                        💰 <strong>Ahorro:</strong> Aparta $${ahorroPorPaycheck.toFixed(2)} apenas cobres
+                        · Quedan: <strong>$${sobranteDespuesAhorro1.toFixed(2)}</strong>
+                    </div>` : ''}
                 `;
             } else {
-                resultadoHTML += `<p style="color: #999;">No hay gastos asignados a este pago</p>`;
+                resultadoHTML += `<p style="color: #999; padding: 10px 15px;">No hay gastos asignados a este pago</p>`;
             }
-            
+
             resultadoHTML += `
                     </div>
                 </div>
-                
-                <div class="calendario-pago">
-                    <div class="pago-title">
-                        💳 PAYCHECK 2 (${diaPago2} de ${mesesNombres[mesPago2]}) - $${montoPago2.toFixed(2)}
+
+                <div class="paycheck-card">
+                    <div class="paycheck-card-header">
+                        <span>💳 PAYCHECK 2 — ${diaPago2} de ${mesesNombres[mesPago2]}</span>
+                        <span>$${montoPago2.toFixed(2)}</span>
                     </div>
-                    <div class="pago-detalle">
+                    <div class="paycheck-card-body">
             `;
             
             if (gastosPago2.length > 0) {
                 gastosPago2.sort((a, b) => a.dia - b.dia).forEach(gasto => {
                     const mesTexto = gasto.mes && gasto.mes !== 'todos' ? ` de ${mesesNombres[parseInt(gasto.mes)]}` : '';
                     
-                    let itemClass = 'pago-item';
+                    let tipoClass = 'tipo-fijo';
                     let icon = '✅';
                     let detalle = '';
-                    
+
                     if (gasto.tipo === 'tarjeta') {
-                        itemClass += '" style="border-left-color: #667eea; background: #f0f2ff;';
+                        tipoClass = 'tipo-tarjeta';
                         icon = '💳';
-                        
+
                         if (gasto.faltante && gasto.faltante > 0) {
-                            detalle = ` <span style="color: #ff6b6b;">⚠️ (Falta: $${gasto.faltante.toFixed(2)} para el mínimo de $${(gasto.minimo || 0).toFixed(2)})</span>`;
+                            detalle = `<span style="color: #ff6b6b; font-size:0.85em;">⚠️ Falta $${gasto.faltante.toFixed(2)} para el mínimo de $${(gasto.minimo || 0).toFixed(2)}</span>`;
                         } else if (gasto.opcionMinimo && gasto.opcionRecomendado) {
-                            let detalleDeuda = gasto.deuda > 0 ? ` - Balance: $${gasto.deuda.toFixed(2)}` : '';
+                            let detalleDeuda = gasto.deuda > 0 ? ` — Balance: $${gasto.deuda.toFixed(2)}` : '';
                             let extra = gasto.extraRecomendado || 0;
-                            detalle = `<br><span style="color: #667eea; font-weight: bold;">💡 Opciones:</span> <span style="color: #ff9800;">Mínimo $${gasto.opcionMinimo.toFixed(2)}</span> o <span style="color: #51cf66;">✨ $${gasto.opcionRecomendado.toFixed(2)} (+ $${extra.toFixed(2)})</span>${detalleDeuda}`;
+                            detalle = `<span style="font-size:0.85em;"><span style="color:#ff9800;">Mín. $${gasto.opcionMinimo.toFixed(2)}</span> · <span style="color:#51cf66;">Rec. $${gasto.opcionRecomendado.toFixed(2)} (+$${extra.toFixed(2)})</span>${detalleDeuda}</span>`;
                         } else {
-                            // Fallback if no options calculated
-                            let detalleDeuda = gasto.deuda > 0 ? ` - Balance: $${gasto.deuda.toFixed(2)}` : '';
-                            detalle = `<br><span style="color: #ff9800;">Pago mínimo: $${(gasto.minimo || 0).toFixed(2)}</span>${detalleDeuda}`;
+                            let detalleDeuda = gasto.deuda > 0 ? ` — Balance: $${gasto.deuda.toFixed(2)}` : '';
+                            detalle = `<span style="color:#ff9800; font-size:0.85em;">Mínimo: $${(gasto.minimo || 0).toFixed(2)}${detalleDeuda}</span>`;
                         }
                     } else if (gasto.tipo === 'variable') {
-                        itemClass += '" style="border-left-color: #51cf66;';
+                        tipoClass = 'tipo-variable';
                         icon = '📦';
                     } else if (gasto.tipo === 'imprevisto') {
-                        itemClass += '" style="border-left-color: #ff6b6b; background: #fff5f5;';
+                        tipoClass = 'tipo-imprevisto';
                         icon = '🚨';
-                        detalle = ` <span style="color: #ff6b6b; font-weight: bold;">(GASTO ÚNICO - Solo este mes)</span>`;
+                        detalle = `<span style="color:#ff6b6b; font-size:0.85em;">(GASTO ÚNICO - Solo este mes)</span>`;
                     }
-                    
+
                     resultadoHTML += `
-                        <div class="${itemClass}">
-                            ${icon} <strong>${gasto.nombre}</strong>: $${gasto.monto.toFixed(2)} (vence día ${gasto.dia}${mesTexto})<br>
-                            ${detalle}
+                        <div class="gasto-linea ${tipoClass}">
+                            <div class="gasto-linea-icon">${icon}</div>
+                            <div class="gasto-linea-info">
+                                <strong>${gasto.nombre}</strong> — día ${gasto.dia}${mesTexto}
+                                ${detalle ? `<br>${detalle}` : ''}
+                            </div>
+                            <div class="gasto-linea-monto">$${gasto.monto.toFixed(2)}</div>
                         </div>
                     `;
                 });
@@ -4547,40 +4614,37 @@ tarjetas.forEach(tarjeta => {
             
             if (totalMiscelaneos > 0) {
                 resultadoHTML += `
-                    <div class="pago-item" style="border-left-color: #ffd43b; background: #fffbf0;">
-                        🎯 <strong>Presupuesto Misceláneos (2da quincena)</strong>: $${miscelaneosPorPago.toFixed(2)}
+                    <div class="gasto-linea tipo-misc">
+                        <div class="gasto-linea-icon">🎯</div>
+                        <div class="gasto-linea-info"><strong>Misceláneos (2da quincena)</strong></div>
+                        <div class="gasto-linea-monto">$${miscelaneosPorPago.toFixed(2)}</div>
                     </div>
                 `;
             }
-            
+
             if (gastosPago2.length > 0 || totalMiscelaneos > 0) {
-                // Calcular ahorro por paycheck si hay meta
                 const ahorroPorPaycheck = metaAhorro / (esSemanal ? 4 : 2);
                 const sobranteDespuesAhorro2 = (montoPago2 - totalPago2) - ahorroPorPaycheck;
-                
+                const sobrante2 = montoPago2 - totalPago2;
+
                 resultadoHTML += `
-                    <div style="margin-top: 15px; padding: 15px; background: #e8eaff; border-radius: 8px; font-weight: bold;">
-                        Total a pagar: $${totalPago2.toFixed(2)} | 
-                        <span style="color: ${(montoPago2 - totalPago2) >= 0 ? '#51cf66' : '#ff6b6b'};">
-                            Te ${(montoPago2 - totalPago2) >= 0 ? 'sobran' : 'faltan'}: $${Math.abs(montoPago2 - totalPago2).toFixed(2)}
+                    <div class="paycheck-total">
+                        <span>Total a pagar</span>
+                        <span style="color: ${sobrante2 >= 0 ? '#37b24d' : '#ff6b6b'};">
+                            $${totalPago2.toFixed(2)}
+                            <span style="font-size:0.85em; font-weight:400; margin-left:6px;">(te ${sobrante2 >= 0 ? 'sobran' : 'faltan'} $${Math.abs(sobrante2).toFixed(2)})</span>
                         </span>
-                        ${metaAhorro > 0 ? `
-                        <br><br>
-                        <div style="background: #51cf66; color: white; padding: 12px; border-radius: 8px; margin-top: 10px;">
-                            💰 <strong>AHORRO:</strong> Aparta $${ahorroPorPaycheck.toFixed(2)} apenas cobres
-                            <br>
-                            <span style="font-size: 0.9em;">Después del ahorro te quedan: 
-                            <strong style="color: ${sobranteDespuesAhorro2 >= 0 ? '#d1f7dd' : '#ff6b6b'};">
-                                $${sobranteDespuesAhorro2.toFixed(2)}
-                            </strong> disponibles</span>
-                        </div>
-                        ` : ''}
                     </div>
+                    ${metaAhorro > 0 ? `
+                    <div style="background: #51cf66; color: white; padding: 10px 14px; border-radius: 8px; margin-top: 8px; font-size:0.9em;">
+                        💰 <strong>Ahorro:</strong> Aparta $${ahorroPorPaycheck.toFixed(2)} apenas cobres
+                        · Quedan: <strong>$${sobranteDespuesAhorro2.toFixed(2)}</strong>
+                    </div>` : ''}
                 `;
             } else {
-                resultadoHTML += `<p style="color: #999;">No hay gastos asignados a este pago</p>`;
+                resultadoHTML += `<p style="color: #999; padding: 10px 15px;">No hay gastos asignados a este pago</p>`;
             }
-            
+
             resultadoHTML += `
                     </div>
                 </div>
@@ -5057,7 +5121,6 @@ tarjetas.forEach(tarjeta => {
             }, 100);
             
             // ==================== ACTUALIZAR NOTIFICACIONES ====================
-            // Reprogramar notificaciones basadas en los nuevos datos calculados
             if (typeof actualizarNotificaciones === 'function') {
                 try {
                     actualizarNotificaciones();
@@ -5065,7 +5128,16 @@ tarjetas.forEach(tarjeta => {
                     console.log('ℹ️ Notificaciones no disponibles:', notifError);
                 }
             }
-            
+
+            // ==================== RESUMEN RÁPIDO EN BARRA ====================
+            const resumenEl = document.getElementById('resumen-rapido');
+            if (resumenEl) {
+                const pos = sobrante >= 0;
+                resumenEl.innerHTML = `<span class="resumen-badge ${pos ? 'resumen-positivo' : 'resumen-negativo'}">
+                    ${pos ? '✅' : '⚠️'} Sobrante: ${pos ? '+' : ''}$${sobrante.toFixed(2)}
+                </span>`;
+            }
+
             } catch (error) {
                 console.error('❌ Error detallado:', error);
                 console.error('Stack:', error.stack);
@@ -5105,7 +5177,7 @@ tarjetas.forEach(tarjeta => {
             
             // Recolectar TODOS los gastos fijos
             const gastosFijos = [];
-            const filasGastosFijos = document.querySelectorAll('#tabla-gastos-fijos-body tr');
+            const filasGastosFijos = document.querySelectorAll('#tabla-gastos-fijos-body .gasto-fijo-row');
             filasGastosFijos.forEach(fila => {
                 const nombre = fila.querySelector('.gasto-fijo-nombre')?.value || '';
                 const monto = parseFloat(fila.querySelector('.gasto-fijo-monto')?.value) || 0;
@@ -5945,17 +6017,49 @@ tarjetas.forEach(tarjeta => {
                 navigator.serviceWorker.register('./sw.js')
                     .then(registration => {
                         console.log('✅ Service Worker registrado:', registration.scope);
+
+                        const mostrarToast = () => {
+                            const toast = document.getElementById('toast-actualizacion');
+                            const btn = document.getElementById('btn-actualizar-sw');
+                            if (!toast || !btn) return;
+                            toast.classList.add('show');
+                            btn.onclick = () => {
+                                if (registration.waiting) {
+                                    registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+                                }
+                            };
+                        };
+
+                        if (registration.waiting) mostrarToast();
+
+                        registration.addEventListener('updatefound', () => {
+                            const nuevoSW = registration.installing;
+                            nuevoSW.addEventListener('statechange', () => {
+                                if (nuevoSW.state === 'installed' && navigator.serviceWorker.controller) {
+                                    mostrarToast();
+                                }
+                            });
+                        });
                     })
-                    .catch(error => {
-                        console.log('❌ Error al registrar Service Worker:', error);
-                    });
+                    .catch(error => console.log('❌ Error al registrar Service Worker:', error));
+            });
+
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+                window.location.reload();
             });
         }
         
     </script>
     
+    <!-- Toast de actualización de versión -->
+    <div id="toast-actualizacion" class="toast-update">
+        <span>🔄 Nueva versión disponible</span>
+        <button id="btn-actualizar-sw">Actualizar ahora</button>
+        <button onclick="this.closest('.toast-update').classList.remove('show')" aria-label="Cerrar">✕</button>
+    </div>
+
     <!-- Sistema de Notificaciones Push v3.0 -->
     <script src="./notifications.js"></script>
-    
+
 </body>
 </html>

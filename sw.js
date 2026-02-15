@@ -1,8 +1,8 @@
 // Service Worker - Organizador de Finanzas Personal
-// Versión 3.0.2 - Network First para actualizaciones automáticas en iPhone
+// Versión 3.0.4 - Network First para actualizaciones automáticas en iPhone
 // Creado por Ismael Bigio
 
-const CACHE_NAME = 'finanzas-v3.0.2';
+const CACHE_NAME = 'finanzas-v3.0.4';
 const urlsToCache = [
   './',
   './index.html',
@@ -15,7 +15,7 @@ const urlsToCache = [
 
 // ==================== INSTALACIÓN ====================
 self.addEventListener('install', event => {
-  console.log('✅ Service Worker: Instalando v3.0.2...');
+  console.log('✅ Service Worker: Instalando v3.0.4...');
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
@@ -31,7 +31,7 @@ self.addEventListener('install', event => {
 
 // ==================== ACTIVACIÓN ====================
 self.addEventListener('activate', event => {
-  console.log('✅ Service Worker: Activando v3.0.2...');
+  console.log('✅ Service Worker: Activando v3.0.4...');
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
@@ -209,4 +209,4 @@ self.addEventListener('periodicsync', event => {
   }
 });
 
-console.log('🚀 Service Worker v3.0.2 cargado - Network First activado');
+console.log('🚀 Service Worker v3.0.4 cargado - Network First activado');
