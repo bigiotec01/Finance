@@ -1,0 +1,6 @@
+# Claude Code - memoria y planes internos
+.claude/
+
+# OS
+.DS_Store
+Thumbs.db
