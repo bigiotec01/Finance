@@ -1,12 +1,12 @@
 {
-  "name": "Organizador de Finanzas Personal",
-  "short_name": "Finanzas",
-  "description": "Organiza tus ingresos y gastos de forma inteligente",
+  "name": "BudgetWise - Smart Financial Planner",
+  "short_name": "BudgetWise",
+  "description": "Smart budgeting made simple — plan your income, track expenses, save more",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#667eea",
-  "theme_color": "#667eea",
+  "background_color": "#1e1b4b",
+  "theme_color": "#6366f1",
   "orientation": "portrait",
   "categories": ["finance", "productivity"],
   "icons": [
